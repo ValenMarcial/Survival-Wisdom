@@ -6,6 +6,8 @@ require 'bcrypt'
 require './models/user'
 require './models/stat'
 
+set :public_folder, 'assets'
+
 # Para autenticar usuario
 module Authentication
   def current_user
