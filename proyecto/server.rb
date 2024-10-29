@@ -42,7 +42,6 @@ class App < Sinatra::Application
     erb :'home/home', locals: { user: current_user }
   end
 
-  
   get '/' do
     if current_user.nil?
       redirect '/login'
