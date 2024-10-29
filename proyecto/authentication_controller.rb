@@ -6,7 +6,6 @@ require 'bcrypt'
 require './models/user'
 require './models/stat'
 
-set :public_folder, 'assets'
 
 # Para autenticar usuario
 module Authentication
@@ -19,6 +18,7 @@ end
 class AuthController < Sinatra::Base
   include Authentication
 
+  set :public_folder, 'assets'
   # Restringe el ingreso a ciertas rutas de la web sin estar logeado
   before do
     redirect '/login' unless ['/login', '/register', '/'].include?(request.path_info) || current_user

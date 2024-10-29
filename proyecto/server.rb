@@ -83,18 +83,18 @@ class App < Sinatra::Application
   end
 
   get '/add_question' do
-    erb :'home/add_question'
+    erb :'home/add_question', { user: current_user }
   end
 
   post '/add_question' do
     statement = params[:statement]
     difficulty = params[:difficulty]
 
-    params[:descriptionL]
-    params[:effectsL].split(',').map(&:strip).map(&:to_i)
+    description_l = params[:descriptionL]
+    effects_l = params[:effectsL].split(',').map(&:strip).map(&:to_i)
 
-    params[:descriptionR]
-    params[:effectsR].split(',').map(&:strip).map(&:to_i)
+    description_r = params[:descriptionR]
+    effects_r = params[:effectsR].split(',').map(&:strip).map(&:to_i)
 
     question = Question.new
 
@@ -109,24 +109,24 @@ class App < Sinatra::Application
 
     option_l = Option.new
     option_l.question_id = question_id
-    option_l.description = descriptionL
-    option_l.effects = effectsL
+    option_l.description = description_l
+    option_l.effects = effects_l
 
 
     option_r = Option.new
     option_r.question_id = question_id
-    option_r.description = descriptionR
-    option_r.effects = effectsR
+    option_r.description = description_r
+    option_r.effects = effects_r
 
     option_l.save
     option_r.save
 
     @success_message = 'The question was successfully added!'
 
-    erb :'home/add_question'
+    erb :'home/add_question', { user: current_user }
   end
 
   get '/card-stats' do
-    erb :'home/card-stats'
+    erb :'home/card-stats', { user: current_user }
   end
 end
