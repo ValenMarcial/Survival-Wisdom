@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Atributos de la Clase Question
 class CreateQuestionsTable < ActiveRecord::Migration[7.1]
   def change
     create_table :questions do |t|
@@ -8,4 +11,3 @@ class CreateQuestionsTable < ActiveRecord::Migration[7.1]
     end
   end
 end
-

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+## Atributos de la Clase Guide
 class CreateGuidesTable < ActiveRecord::Migration[7.1]
   def change
     create_table :guides do |t|

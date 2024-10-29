@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Atributos de la Clase Skill
 class CreateSkillsTable < ActiveRecord::Migration[7.1]
   def change
     create_table :skills do |t|

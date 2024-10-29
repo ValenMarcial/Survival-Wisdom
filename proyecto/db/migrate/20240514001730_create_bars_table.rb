@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Atributos de la Clase Bar
 class CreateBarsTable < ActiveRecord::Migration[7.1]
   def change
     create_table :bars do |t|

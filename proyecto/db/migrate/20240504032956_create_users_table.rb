@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Atributos de la Clase User
 class CreateUsersTable < ActiveRecord::Migration[7.1]
   def change
     create_table :users do |t|
