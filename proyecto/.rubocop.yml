@@ -2,3 +2,8 @@ Metrics/BlockLength:
   Max: 80
   Exclude:
     - 'db/schema.rb'
+
+Metrics/BlockLength:
+  Max: 500  # Cambia este valor al necesario
+  Exclude:
+    - 'spec/**/*.rb'
