@@ -225,11 +225,10 @@ class App < Sinatra::Application
     opcionelegida = params[:valor].to_i
     effects = Question.find(session[:question]).options[opcionelegida-1].effects
     question = Question.find(session[:question])
-
-    if params[:side] == 'left'then
-      question.leftclicks = question.leftclicks + 1
-    else
+    if opcionelegida == 2 then
       question.rightclicks = question.rightclicks + 1
+    else
+      question.leftclicks = question.leftclicks + 1
     end
     question.save
 
