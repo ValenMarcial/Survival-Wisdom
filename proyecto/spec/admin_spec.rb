@@ -1,5 +1,10 @@
+# frozen_string_literal: true
 
-Rspec.describe 'Admin Features' do
+require 'rspec'
+require 'rack/test'
+require 'spec_helper'
+require_relative '../server'
+RSpec.describe 'Admin Features' do
 
     
     describe 'Admin features' do

@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
-Rspec.describe 'Authentication' do
+require 'rspec'
+require 'rack/test'
+require 'spec_helper'
+require_relative '../server'
+
+RSpec.describe 'Authentication' do
 
     describe 'POST /login' do
         user = User.new

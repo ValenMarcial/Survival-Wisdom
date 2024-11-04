@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
-Rspec.describe 'Game Logic' do
+require 'rspec'
+require 'rack/test'
+require 'spec_helper'
+require_relative '../server'
+
+RSpec.describe 'Game Logic' do
 
         # Checkea que la partida se inicialice correctamente
     describe 'GET /keep_it_alive/init' do
@@ -239,4 +244,72 @@ Rspec.describe 'Game Logic' do
         end
       end
 
+      describe 'Game Restart' do
+        it 'resets the game state and redirects to the game init page' do
+          # logeo el usuario:
+          post '/login', first: 'testuser1', password: 'password'
+          # Realiza la solicitud POST para reiniciar el juego
+          post '/jugar-de-nuevo'
+    
+          # Verifica la redirección
+          expect(last_response).to be_redirect
+          follow_redirect!
+    
+          # Verifica que la redirección lleve a la página de inicio del juego
+          expect(last_request.path).to eq('/keep_it_alive/init')
+        end
+      end
+
+      describe 'GET /keep_it_alive/init' do
+        context 'cuando no hay preguntas disponibles' do
+          before do
+            # logeo el usuario:
+            post '/login', first: 'testuser1', password: 'password'
+            allow(Question).to receive(:all).and_return(double(order: [])) # Simula que no hay preguntas
+            allow(Bar).to receive(:all).and_return([]) # Opcional: si también necesitas simular los bares
+            get '/keep_it_alive/init'
+          end
+    
+          it 'debe devolver un mensaje indicando que no hay preguntas disponibles' do
+            expect(last_response.body.force_encoding('UTF-8')).to eq('No hay preguntas disponibles.')
+          end
+        end
+      end
+    
+    
+      describe 'GET /keep_it_alive/playing' do
+        before do
+          post '/login', first: 'testuser1', password: 'password'
+        end
+    
+        it 'empty questions' do
+          post '/login', first: 'testuser1', password: 'password'
+    
+          env 'rack.session', {
+            health: 5,
+            hunger: 5,
+            water: 5,
+            temperature: 5,
+            days: 0,
+            question: nil,
+            questions: []
+          }
+    
+          get '/keep_it_alive/playing'
+          expect(last_request.session[:questions]).to_not eq(nil)
+        end
+    
+    
+    
+        it 'asigna correctamente @questions con las preguntas de la sesión' do
+          @questions = Question.all.order('RANDOM()').to_a.map(&:id)
+          question1 = @questions.shift
+          question2 = @questions.shift
+    
+          # Simular que las preguntas estan en la sesión
+          get '/keep_it_alive/playing', {}, { 'rack.session' => { '@questions' => [question1, question2, question1] } }
+          # Verificar que la sesión contiene las preguntas correctas
+          expect(last_request.env['rack.session']['@questions']).to contain_exactly(question1, question2)
+        end
+      end
 end
