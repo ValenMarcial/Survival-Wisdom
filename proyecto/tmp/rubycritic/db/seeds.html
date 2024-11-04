@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">184</span><small> lines of codes</small></div>
+              <div><span class="metric">229</span><small> lines of codes</small></div>
               <div><span class="metric">0</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">N/A</span><small> complexity/method</small></div>
-              <div><span class="metric">11</span><small> churn</small></div>
+              <div><span class="metric">15</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">0.0</span><small> complexity</small></div>
@@ -97,95 +97,111 @@
       </div>
     </div>
 
-    <code class="prettyprint linenums lang-ruby file-code js-file-code">
+    <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-/Barra Salud=[0],Comida[1],Agua[2],Temperatura[3]/
+require &#39;bcrypt&#39;
 
 questions = [
-  { statement: &#39;You come across a hive of bees&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You find an abandoned campfire&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You find a shallow stream&#39;, typeCard: &#39;Medium&#39; },
-  { statement:&#39;You find a stream&#39; , typeCard: &#39;Medium&#39; },
-  { statement:&#39;You come across an unknown plant&#39; , typeCard:&#39;Medium&#39; },
-  { statement:&#39;You find a group of mushrooms&#39; , typeCard:&#39;Medium&#39; },
-  { statement:&#39;You encounter a thunderstorm&#39; , typeCard:&#39;Hard&#39; },
-  { statement:&#39;You meet a group of survivors&#39; , typeCard:&#39;Hard&#39; },
-  { statement:&#39;You meet a wounded wolf&#39;, typeCard:&#39;Hard&#39; },
-  { statement:&#39;You find an abandoned backpack&#39;, typeCard:&#39;Easy&#39; },
-  { statement:&#39;You find a dark cave&#39;, typeCard:&#39;Medium&#39; },
-  { statement:&#39;You find a fruit tree&#39;, typeCard:&#39;Medium&#39; },
-  { statement:&#39;Its getting a little cold&#39;, typeCard:&#39;Medium&#39; },
-  { statement: &#39;You come across a stream with small fish swimming near the shore&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You find a colony of insects under a rotten log&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You discover a bird\&#39;s nest with several eggs inside&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You find a puddle with stagnant water and some mosquito larvae&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You find several worms after a rain&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You come across a small river crab in a stream&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You see a non-venomous snake near your shelter&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You find a group of snails in a damp area&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You see a frog near a pond&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You come across a bush with unknown berries&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You need to build a fire for warmth and cooking.&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You find a water source that looks clean.&#39;, typeCard: &#39;Easy&#39; },
-  { statement: &#39;You encounter a snow-covered area and need to make a fire base.&#39;, typeCard: &#39;Hard&#39; },
-  { statement: &#39;You are in a frigid area with only snow and ice around you.&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You are stranded at sea with no fresh water.&#39;, typeCard: &#39;Hard&#39; },
-  { statement: &#39;You find yourself on a deserted beach with no obvious fresh water source.&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You are in a desert with extremely limited water sources.&#39;, typeCard: &#39;Hard&#39; },
-  { statement: &#39;You are in a jungle with various plants and trees around.&#39;, typeCard: &#39;Easy&#39; },
-  { statement: &#39;You find an ideal spot for a shelter&#39;, typeCard: &#39;Easy&#39; },
-  { statement: &#39;You need to quickly build a shelter to protect yourself from the cold&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;Your shelter has collapsed during a storm&#39;, typeCard: &#39;Hard&#39; },
-  { statement: &#39;You find yourself in a desert with limited water supply.&#39;, typeCard: &#39;Hard&#39; },
-  { statement: &#39;You discover an open wound on your leg.&#39;, typeCard: &#39;Hard&#39; },
-  { statement: &#39;You are feeling extremely tired after a long hike.&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You come across a stream of water.&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You have a splitting headache and feel dizzy.&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;You notice your urine is very dark and you feel weak.&#39;, typeCard: &#39;Hard&#39; },
-  { statement: &#39;You have an insect bite that is swelling.&#39;, typeCard: &#39;Easy&#39; },
-  { statement: &#39;You are in a cold environment without proper clothing.&#39;, typeCard: &#39;Hard&#39; },
-  { statement: &#39;You see some berries that you are unsure are edible.&#39;, typeCard: &#39;Medium&#39; },
-  { statement: &#39;Your feet are developing blisters.&#39;, typeCard: &#39;Medium&#39; }
+  { statement: &#39;You come across a hive of bees&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You find an abandoned campfire&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You find a shallow stream&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You find a stream&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You come across an unknown plant&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You find a group of mushrooms&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You encounter a thunderstorm&#39;, typeCard: &#39;Hard&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You meet a group of survivors&#39;, typeCard: &#39;Hard&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You meet a wounded wolf&#39;, typeCard: &#39;Hard&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You find an abandoned backpack&#39;, typeCard: &#39;Easy&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You find a dark cave&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You find a fruit tree&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;It\&#39;s getting a little cold&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You come across a stream with small fish swimming near the shore&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0,
+    rightclicks: 0 },
+  { statement: &#39;You find a colony of insects under a rotten log&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You discover a bird\&#39;s nest with several eggs inside&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0,
+    rightclicks: 0 },
+  { statement: &#39;You find a puddle with stagnant water and some mosquito larvae&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0,
+    rightclicks: 0 },
+  { statement: &#39;You find several worms after a rain&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You come across a small river crab in a stream&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You see a non-venomous snake near your shelter&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You find a group of snails in a damp area&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You see a frog near a pond&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You come across a bush with unknown berries&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You need to build a fire for warmth and cooking.&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You find a water source that looks clean.&#39;, typeCard: &#39;Easy&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You encounter a snow-covered area and need to make a fire base.&#39;, typeCard: &#39;Hard&#39;, leftclicks: 0,
+    rightclicks: 0 },
+  { statement: &#39;You are in a frigid area with only snow and ice around you.&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0,
+    rightclicks: 0 },
+  { statement: &#39;You are stranded at sea with no fresh water.&#39;, typeCard: &#39;Hard&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You find yourself on a deserted beach with no obvious fresh water source.&#39;, typeCard: &#39;Medium&#39;,
+    leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You are in a desert with extremely limited water sources.&#39;, typeCard: &#39;Hard&#39;, leftclicks: 0,
+    rightclicks: 0 },
+  { statement: &#39;You are in a jungle with various plants and trees around.&#39;, typeCard: &#39;Easy&#39;, leftclicks: 0,
+    rightclicks: 0 },
+  { statement: &#39;You find an ideal spot for a shelter&#39;, typeCard: &#39;Easy&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You need to quickly build a shelter to protect yourself from the cold&#39;, typeCard: &#39;Medium&#39;,
+    leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;Your shelter has collapsed during a storm&#39;, typeCard: &#39;Hard&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You find yourself in a desert with limited water supply.&#39;, typeCard: &#39;Hard&#39;, leftclicks: 0,
+    rightclicks: 0 },
+  { statement: &#39;You discover an open wound on your leg.&#39;, typeCard: &#39;Hard&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You are feeling extremely tired after a long hike.&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0,
+    rightclicks: 0 },
+  { statement: &#39;You come across a stream of water.&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You have a splitting headache and feel dizzy.&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You notice your urine is very dark and you feel weak.&#39;, typeCard: &#39;Hard&#39;, leftclicks: 0,
+    rightclicks: 0 },
+  { statement: &#39;You have an insect bite that is swelling.&#39;, typeCard: &#39;Easy&#39;, leftclicks: 0, rightclicks: 0 },
+  { statement: &#39;You are in a cold environment without proper clothing.&#39;, typeCard: &#39;Hard&#39;, leftclicks: 0,
+    rightclicks: 0 },
+  { statement: &#39;You see some berries that you are unsure are edible.&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0,
+    rightclicks: 0 },
+  { statement: &#39;Your feet are developing blisters.&#39;, typeCard: &#39;Medium&#39;, leftclicks: 0, rightclicks: 0 }
 ]
+
 
 questions.each do |t|
   Question.create(t)
 end
 
 options = [
-  { question_id: 1, description: &#39;Try to steal some honey&#39;, effects:[-1,1,0,0]},
-  { question_id: 1, description: &#39;Leave the hive alone&#39;, effects:[0,-1,0,0]},
-  { question_id: 2, description: &#39;Rekindle the campfire to keep warm&#39;, effects:[0,-1,-1,3]},
-  { question_id: 2, description: &#39;Ignore the campfire and move on&#39;, effects:[0,0,0,-1]},
-  { question_id: 3, description: &#39;Go looking for fish&#39;, effects:[-1,2,0,-1]},
-  { question_id: 3, description: &#39;Avoid it&#39;, effects:[0,-1,-1,0]},
-  { question_id: 4, description:&#39;Drink water from the stream&#39; , effects:[1,1,0,0]},
-  { question_id: 4, description: &#39;Distrust water and look for another source&#39;, effects:[0,0,-1,0]},
-  { question_id: 5, description: &#39;Test the plant&#39;, effects:[-3,0,0,0]},
-  { question_id: 5, description:&#39;Ignore the plant&#39; , effects:[0,0,0,0]},
-  { question_id: 6, description: &#39;Collect and eat mushrooms&#39;, effects:[-2,1,0,0]},
-  { question_id: 6, description:&#39;Be wary of mushrooms and move on&#39; , effects:[0,-1,0,0]},
-  { question_id: 7, description:&#39;Take shelter under a tree&#39; , effects:[-3,0,2,-3]},
-  { question_id: 7, description:&#39;Find a safer refuge&#39; , effects:[0,0,3,-3]},
-  { question_id: 8, description:&#39;Try to negotiate with them&#39; , effects:[-3,-2,-1,0]},
-  { question_id: 8, description:&#39;Avoid conflict and escape&#39; , effects:[0,0,0,-1]},
-  { question_id: 9, description:&#39;Run&#39; , effects:[0,-1,-1,1]},
-  { question_id: 9, description:&#39;hunt the wolf&#39; , effects:[-3,3,-2,-1]},
-  { question_id: 10, description:&#39;Check backpack for supplies&#39; , effects:[0,2,3,1]},
-  { question_id: 10, description:&#39;Leave the backpack in its place&#39; , effects:[0,0,0,0]},
-  { question_id: 11, description:&#39;Explore the cave in search of shelter&#39; , effects:[1,0,0,-2]},
-  { question_id: 11, description:&#39;Avoid the cave and continue traveling&#39; , effects:[0,-1,-1,0]},
-  { question_id: 12, description:&#39;Collect and eat the fruit&#39; , effects:[0,2,1,0]},
-  { question_id: 12, description:&#39;Distrust the fruit and move on&#39; , effects:[0,-1,-1,-1]},
-  { question_id: 13, description:&#39;Create a campfire on the trail&#39; , effects:[0,-1,0,3]},
-  { question_id: 13, description:&#39;Keep looking for shelter&#39; , effects:[0,-1,-1,-2]},
+  { question_id: 1, description: &#39;Try to steal some honey&#39;, effects: [-1, 1, 0, 0] },
+  { question_id: 1, description: &#39;Leave the hive alone&#39;, effects: [0, -1, 0, 0] },
+  { question_id: 2, description: &#39;Rekindle the campfire to keep warm&#39;, effects: [0, -1, -1, 3] },
+  { question_id: 2, description: &#39;Ignore the campfire and move on&#39;, effects: [0, 0, 0, -1] },
+  { question_id: 3, description: &#39;Go looking for fish&#39;, effects: [-1, 2, 0, -1] },
+  { question_id: 3, description: &#39;Avoid it&#39;, effects: [0, -1, -1, 0] },
+  { question_id: 4, description: &#39;Drink water from the stream&#39;, effects: [1, 1, 0, 0] },
+  { question_id: 4, description: &#39;Distrust water and look for another source&#39;, effects: [0, 0, -1, 0] },
+  { question_id: 5, description: &#39;Test the plant&#39;, effects: [-3, 0, 0, 0] },
+  { question_id: 5, description: &#39;Ignore the plant&#39;, effects: [0, 0, 0, 0] },
+  { question_id: 6, description: &#39;Collect and eat mushrooms&#39;, effects: [-2, 1, 0, 0] },
+  { question_id: 6, description: &#39;Be wary of mushrooms and move on&#39;, effects: [0, -1, 0, 0] },
+  { question_id: 7, description: &#39;Take shelter under a tree&#39;, effects: [-3, 0, 2, -3] },
+  { question_id: 7, description: &#39;Find a safer refuge&#39;, effects: [0, 0, 3, -3] },
+  { question_id: 8, description: &#39;Try to negotiate with them&#39;, effects: [-3, -2, -1, 0] },
+  { question_id: 8, description: &#39;Avoid conflict and escape&#39;, effects: [0, 0, 0, -1] },
+  { question_id: 9, description: &#39;Run&#39;, effects: [0, -1, -1, 1] },
+  { question_id: 9, description: &#39;hunt the wolf&#39;, effects: [-3, 3, -2, -1] },
+  { question_id: 10, description: &#39;Check backpack for supplies&#39;, effects: [0, 2, 3, 1] },
+  { question_id: 10, description: &#39;Leave the backpack in its place&#39;, effects: [0, 0, 0, 0] },
+  { question_id: 11, description: &#39;Explore the cave in search of shelter&#39;, effects: [1, 0, 0, -2] },
+  { question_id: 11, description: &#39;Avoid the cave and continue traveling&#39;, effects: [0, -1, -1, 0] },
+  { question_id: 12, description: &#39;Collect and eat the fruit&#39;, effects: [0, 2, 1, 0] },
+  { question_id: 12, description: &#39;Distrust the fruit and move on&#39;, effects: [0, -1, -1, -1] },
+  { question_id: 13, description: &#39;Create a campfire on the trail&#39;, effects: [0, -1, 0, 3] },
+  { question_id: 13, description: &#39;Keep looking for shelter&#39;, effects: [0, -1, -1, -2] },
   { question_id: 14, description: &#39;Catch some fish and cook them&#39;, effects: [1, 2, 0, 0] },
   { question_id: 14, description: &#39;Drink directly from the stream without treating the water&#39;, effects: [-2, 0, 1, 0] },
   { question_id: 15, description: &#39;Collect and eat the insects after cooking them&#39;, effects: [0, 2, 0, 0] },
   { question_id: 15, description: &#39;Ignore the insects because they seem unpleasant&#39;, effects: [0, 0, 0, 0] },
   { question_id: 16, description: &#39;Take all the eggs and cook them&#39;, effects: [-1, 3, 0, 0] },
   { question_id: 16, description: &#39;Take only some eggs, leaving the rest for later&#39;, effects: [0, 2, 0, 0] },
-  { question_id: 17, description: &#39;Drink the water without treating it because you are very thirsty&#39;, effects: [-3, 0, 2, 0] },
+  { question_id: 17, description: &#39;Drink the water without treating it because you are very thirsty&#39;,
+    effects: [-3, 0, 2, 0] },
   { question_id: 17, description: &#39;Look for another cleaner water source&#39;, effects: [0, 0, 0, 0] },
   { question_id: 18, description: &#39;Eat the worms raw&#39;, effects: [-1, 2, 0, 0] },
   { question_id: 18, description: &#39;Purge the worms in clean water before eating them&#39;, effects: [0, 2, 0, 0] },
@@ -194,9 +210,11 @@ options = [
   { question_id: 20, description: &#39;Catch and cook the snake to eat it&#39;, effects: [1, 3, 0, 0] },
   { question_id: 20, description: &#39;Leave the snake alone and keep looking for food&#39;, effects: [0, 0, 0, 0] },
   { question_id: 21, description: &#39;Cook and eat the snails&#39;, effects: [0, 2, 0, 0] },
-  { question_id: 21, description: &#39;Don\&#39;t eat the snails because you are unsure if they are safe&#39;, effects: [0, 0, 0, 0] },
+  { question_id: 21, description: &#39;Don\&#39;t eat the snails because you are unsure if they are safe&#39;,
+    effects: [0, 0, 0, 0] },
   { question_id: 22, description: &#39;Catch and cook the frog&#39;, effects: [0, 2, 0, 0] },
-  { question_id: 22, description: &#39;Don\&#39;t touch the frog because you don\&#39;t know if it\&#39;s poisonous&#39;, effects: [0, 0, 0, 0] },
+  { question_id: 22, description: &#39;Don\&#39;t touch the frog because you don\&#39;t know if it\&#39;s poisonous&#39;,
+    effects: [0, 0, 0, 0] },
   { question_id: 23, description: &#39;Eat the berries without knowing if they are safe&#39;, effects: [-3, 1, 0, 0] },
   { question_id: 23, description: &#39;Don\&#39;t eat the berries and keep looking for known food&#39;, effects: [0, 0, 0, 0] },
   { question_id: 24, description: &#39;Use the tepee method to build a fire.&#39;, effects: [0, 1, 0, 1] },
@@ -209,11 +227,14 @@ options = [
   { question_id: 27, description: &#39;Melt and purify the snow or ice before drinking.&#39;, effects: [1, -1, 2, 0] },
   { question_id: 28, description: &#39;Drink seawater directly.&#39;, effects: [-3, -2, -1, 0] },
   { question_id: 28, description: &#39;Use a desalinator to purify the seawater.&#39;, effects: [2, -2, 2, 0] },
-  { question_id: 29, description: &#39;Dig a hole deep enough to allow water to seep in and boil it.&#39;, effects: [2, -1, 1, 0] },
-  { question_id: 29, description: &#39;Look for green vegetation and dig behind the first group of sand dunes.&#39;, effects: [1, -1, 2, 0] },
+  { question_id: 29, description: &#39;Dig a hole deep enough to allow water to seep in and boil it.&#39;,
+    effects: [2, -1, 1, 0] },
+  { question_id: 29, description: &#39;Look for green vegetation and dig behind the first group of sand dunes.&#39;,
+    effects: [1, -1, 2, 0] },
   { question_id: 30, description: &#39;Search for cacti and cut off the top to extract water.&#39;, effects: [1, -2, 1, 0] },
   { question_id: 30, description: &#39;Follow animal trails to potential water sources.&#39;, effects: [1, -1, 1, 0] },
-  { question_id: 31, description: &#39;Cut down a banana or plantain tree and scoop out water from the stump.&#39;, effects: [2, -1, 2, 0] },
+  { question_id: 31, description: &#39;Cut down a banana or plantain tree and scoop out water from the stump.&#39;,
+    effects: [2, -1, 2, 0] },
   { question_id: 31, description: &#39;Use a bamboo stalk to collect water overnight.&#39;, effects: [2, -1, 2, 0] },
   { question_id: 32, description: &#39;Build a shelter using branches and leaves&#39;, effects: [0, -1, 0, 1] },
   { question_id: 32, description: &#39;Use a nearby natural cave&#39;, effects: [0, 0, 0, 2] },
@@ -248,11 +269,32 @@ options.each do |u|
 end
 
 skills = [
-  {name: &#39;fire&#39;, description: &#39;It is essential for survival in the wild. Provides heat to keep warm, helps cook food, purify water and scare away dangerous animals. Additionally, fire can be a source of light and morale in emergency situations.&#39; , dificulty:&#39;Easy&#39; },
-  {name: &#39;water&#39;, description: &#39;It is essential for life and survival. Without water, the human body cannot function properly. In survival situations, it is crucial to find sources of clean water or learn how to purify water to make it safe to drink.&#39; , dificulty:&#39;Medium&#39;},
-  {name: &#39;food&#39;, description: &#39;Provides the energy needed to stay active and healthy. In survival situations, it is important to know how to identify and gather edible wild foods, as well as hunting and fishing techniques. It is also helpful to carry emergency food with you, such as energy bars or dehydrated foods.&#39; , dificulty:&#39;Medium&#39;},
-  {name: &#39;shelter&#39;, description: &#39;Protects from extreme weather and provides a safe place to rest. In survival situations, shelter can be as simple as a makeshift shelter made of branches and leaves, or as complex as a sturdy tent.&#39; , dificulty:&#39;Medium&#39;},
-  {name: &#39;medicine&#39;, description: &#39;In survival settings, medical care may be limited or nonexistent. Therefore, it is important to have basic first aid knowledge and carry basic medical supplies, such as bandages, disinfectants, and pain medications.&#39; , dificulty:&#39;Hard&#39;}
+  { name: &#39;fire&#39;,
+    description: &#39;It is essential for survival in the wild. Provides heat to keep warm, helps cook food,
+                  purify water and scare away dangerous animals. Additionally,
+                  fire can be a source of light and morale in emergency situations.&#39;,
+    dificulty: &#39;Easy&#39; },
+  { name: &#39;water&#39;,
+    description: &#39;It is essential for life and survival. Without water,
+                  the human body cannot function properly. In survival situations,
+                  it is crucial to find sources of clean water or learn how to purify water to make it safe to drink.&#39;,
+    dificulty: &#39;Medium&#39; },
+  { name: &#39;food&#39;,
+    description: &#39;Provides the energy needed to stay active and healthy.
+                  In survival situations, it is important to know how to identify and gather edible wild foods,
+                  as well as hunting and fishing techniques. It is also helpful to carry emergency food with you,
+                  such as energy bars or dehydrated foods.&#39;,
+    dificulty: &#39;Medium&#39; },
+  { name: &#39;shelter&#39;,
+    description: &#39;Protects from extreme weather and provides a safe place to rest.
+                  In survival situations, shelter can be as simple as a makeshift shelter made of branches and leaves,
+                  or as complex as a sturdy tent.&#39;,
+    dificulty: &#39;Medium&#39; },
+  { name: &#39;medicine&#39;,
+    description: &#39;In survival settings, medical care may be limited or nonexistent.
+                  Therefore, it is important to have basic first aid knowledge and carry basic medical supplies,
+                  such as bandages, disinfectants, and pain medications.&#39;,
+    dificulty: &#39;Hard&#39; }
 ]
 
 skills.each do |t|
@@ -260,11 +302,11 @@ skills.each do |t|
 end
 
 guides = [
-  {title: &#39;fire&#39; , rute_content:&#39;/assets/contets/guideFire&#39; , skill_id: 1},
-  {title: &#39;water&#39; , rute_content:&#39;/assets/contets/guideWater&#39; , skill_id: 2},
-  {title:&#39;food&#39; , rute_content:&#39;/assets/contets/guideFood&#39; , skill_id: 3},
-  {title: &#39;shelter&#39;, rute_content:&#39;/assets/contets/guideShelter&#39; , skill_id: 4},
-  {title: &#39;medicine&#39;, rute_content:&#39;/assets/contets/guideMedicine&#39; , skill_id: 5}
+  { title: &#39;fire&#39;, rute_content: &#39;/assets/contets/guideFire&#39;, skill_id: 1 },
+  { title: &#39;water&#39;, rute_content: &#39;/assets/contets/guideWater&#39;, skill_id: 2 },
+  { title: &#39;food&#39;, rute_content: &#39;/assets/contets/guideFood&#39;, skill_id: 3 },
+  { title: &#39;shelter&#39;, rute_content: &#39;/assets/contets/guideShelter&#39;, skill_id: 4 },
+  { title: &#39;medicine&#39;, rute_content: &#39;/assets/contets/guideMedicine&#39;, skill_id: 5 }
 ]
 
 guides.each do |u|
@@ -272,15 +314,18 @@ guides.each do |u|
 end
 
 bars = [
-  {name_bar: &#39;temperature&#39;, value: 10},
-  {name_bar: &#39;water&#39;, value: 10},
-  {name_bar: &#39;hunger&#39;, value: 10},
-  {name_bar: &#39;health&#39;, value: 10}
+  { name_bar: &#39;temperature&#39;, value: 10 },
+  { name_bar: &#39;water&#39;, value: 10 },
+  { name_bar: &#39;hunger&#39;, value: 10 },
+  { name_bar: &#39;health&#39;, value: 10 }
 ]
 
 bars.each do |u|
   Bar.create(u)
 end
+
+user = { username: &#39;ADMIN&#39;, nickname: &#39;ADMIN&#39;, password: BCrypt::Password.create(&#39;ADMIN&#39;), coins: 999, admin: 1 }
+User.create(user)
 </code>
   </div>
 </div>

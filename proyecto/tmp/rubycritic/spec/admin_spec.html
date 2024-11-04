@@ -52,7 +52,7 @@
       </span>
     </div>
     <div>
-      <h3><small>models /</small> guide.rb</h3>
+      <h3><small>spec /</small> admin_spec.rb</h3>
     </div>
   </div>
   <!--End Page Title -->
@@ -62,22 +62,22 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating a big">
-              A
+            <div class="rating c big">
+              C
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">6</span><small> lines of codes</small></div>
+              <div><span class="metric">34</span><small> lines of codes</small></div>
               <div><span class="metric">0</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">N/A</span><small> complexity/method</small></div>
-              <div><span class="metric">2</span><small> churn</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">0.0</span><small> complexity</small></div>
-              <div><span class="metric">0</span><small> duplications</small></div>
+              <div><span class="metric">96.21</span><small> complexity</small></div>
+              <div><span class="metric">38</span><small> duplications</small></div>
             </div>
           </div>
         </div>
@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                0
-                smell
+                2
+                smells
               </a>
             </li>
           </ul>
@@ -99,9 +99,37 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-# Clase guia
-class Guide &lt; ActiveRecord::Base
-  belongs_to :skill
+require &#39;rspec&#39;
+require &#39;rack/test&#39;
+require &#39;spec_helper&#39;
+require_relative &#39;../server&#39;
+RSpec.describe &#39;Admin Features&#39; do
+  describe &#39;Admin features&#39; do
+    it &#39;Question Successfully Added&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>describe(Admin features)::it#Question Successfully Added has a flog score of 70</span>          </div>  </li></ol>
+      post &#39;/login&#39;, first: &#39;ADMIN&#39;, password: &#39;ADMIN&#39;
+      post &#39;/add_question&#39;, statement: &#39;ABC&#39;, difficulty: &#39;Easy&#39;, descriptionL: &#39;Left&#39;,
+                            descriptionR: &#39;Rigth&#39;, effectsL: &#39;1,1,1,1&#39;, effectsR: &#39;2,2,2,2&#39;
+
+      question = Question.last
+      expect(question).not_to be_nil
+      expect(question.statement).to eq(&#39;ABC&#39;)
+      expect(question.typeCard).to eq(&#39;Easy&#39;)
+      expect(question.options[0].description).to eq(&#39;Left&#39;)
+      expect(question.options[1].description).to eq(&#39;Rigth&#39;)
+      expect(question.options[0].effects).to eq([1, 1, 1, 1])
+      expect(question.options[1].effects).to eq([2, 2, 2, 2])
+    end
+    it &#39;Add_question Endpoint&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="admin_spec.html#L23" class="js-smell-location">0</a>                  <a href="admin_spec.html#L28" class="js-smell-location">1</a>                  </div>  </li></ol>
+      post &#39;/login&#39;, first: &#39;ADMIN&#39;, password: &#39;ADMIN&#39;
+      get &#39;/add_question&#39;
+      expect(last_request.path).to eq(&#39;/add_question&#39;)
+    end
+    it &#39;card-stats Endpoint&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="admin_spec.html#L23" class="js-smell-location">0</a>                  <a href="admin_spec.html#L28" class="js-smell-location">1</a>                  </div>  </li></ol>
+      post &#39;/login&#39;, first: &#39;ADMIN&#39;, password: &#39;ADMIN&#39;
+      get &#39;/card-stats&#39;
+      expect(last_request.path).to eq(&#39;/card-stats&#39;)
+    end
+  end
 end
 </code>
   </div>

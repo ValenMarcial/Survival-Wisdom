@@ -62,21 +62,21 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating a big">
-              A
+            <div class="rating b big">
+              B
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">68</span><small> lines of codes</small></div>
+              <div><span class="metric">73</span><small> lines of codes</small></div>
               <div><span class="metric">0</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">N/A</span><small> complexity/method</small></div>
-              <div><span class="metric">11</span><small> churn</small></div>
+              <div><span class="metric">14</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">47.4</span><small> complexity</small></div>
+              <div><span class="metric">51.3</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -97,7 +97,9 @@
       </div>
     </div>
 
-    <code class="prettyprint linenums lang-ruby file-code js-file-code"># This file is auto-generated from the current state of the database. Instead
+    <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
+
+# This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
@@ -109,61 +111,64 @@
 #
 # It&#39;s strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_15_212628) do
-  create_table &quot;bars&quot;, force: :cascade do |t|
-    t.string &quot;name_bar&quot;
-    t.integer &quot;value&quot;
-    t.datetime &quot;created_at&quot;
-    t.datetime &quot;updated_at&quot;
+ActiveRecord::Schema[7.1].define(version: 20_240_515_212_628) do
+  create_table &#39;bars&#39;, force: :cascade do |t|
+    t.string &#39;name_bar&#39;
+    t.integer &#39;value&#39;
+    t.datetime &#39;created_at&#39;
+    t.datetime &#39;updated_at&#39;
   end
 
-  create_table &quot;guides&quot;, force: :cascade do |t|
-    t.string &quot;title&quot;
-    t.string &quot;rute_content&quot;
-    t.integer &quot;skill_id&quot;
-    t.datetime &quot;created_at&quot;
-    t.datetime &quot;updated_at&quot;
-    t.index [&quot;skill_id&quot;], name: &quot;index_guides_on_skill_id&quot;
+  create_table &#39;guides&#39;, force: :cascade do |t|
+    t.string &#39;title&#39;
+    t.string &#39;rute_content&#39;
+    t.integer &#39;skill_id&#39;
+    t.datetime &#39;created_at&#39;
+    t.datetime &#39;updated_at&#39;
+    t.index [&#39;skill_id&#39;], name: &#39;index_guides_on_skill_id&#39;
   end
 
-  create_table &quot;options&quot;, force: :cascade do |t|
-    t.integer &quot;question_id&quot;
-    t.string &quot;description&quot;
-    t.json &quot;effects&quot;
-    t.index [&quot;question_id&quot;], name: &quot;index_options_on_question_id&quot;
+  create_table &#39;options&#39;, force: :cascade do |t|
+    t.integer &#39;question_id&#39;
+    t.string &#39;description&#39;
+    t.json &#39;effects&#39;
+    t.index [&#39;question_id&#39;], name: &#39;index_options_on_question_id&#39;
   end
 
-  create_table &quot;questions&quot;, force: :cascade do |t|
-    t.string &quot;statement&quot;
-    t.string &quot;typeCard&quot;
+  create_table &#39;questions&#39;, force: :cascade do |t|
+    t.string &#39;statement&#39;
+    t.string &#39;typeCard&#39;
+    t.integer &#39;leftclicks&#39;, default: 0
+    t.integer &#39;rightclicks&#39;, default: 0
   end
 
-  create_table &quot;skills&quot;, force: :cascade do |t|
-    t.string &quot;name&quot;
-    t.string &quot;description&quot;
-    t.string &quot;dificulty&quot;
-    t.datetime &quot;created_at&quot;
-    t.datetime &quot;updated_at&quot;
+  create_table &#39;skills&#39;, force: :cascade do |t|
+    t.string &#39;name&#39;
+    t.string &#39;description&#39;
+    t.string &#39;dificulty&#39;
+    t.datetime &#39;created_at&#39;
+    t.datetime &#39;updated_at&#39;
   end
 
-  create_table &quot;stats&quot;, force: :cascade do |t|
-    t.integer &quot;days&quot;
-    t.integer &quot;user_id&quot;
-    t.index [&quot;user_id&quot;], name: &quot;index_stats_on_user_id&quot;
+  create_table &#39;stats&#39;, force: :cascade do |t|
+    t.integer &#39;days&#39;
+    t.integer &#39;user_id&#39;
+    t.index [&#39;user_id&#39;], name: &#39;index_stats_on_user_id&#39;
   end
 
-  create_table &quot;users&quot;, force: :cascade do |t|
-    t.string &quot;username&quot;
-    t.string &quot;nickname&quot;
-    t.string &quot;password&quot;
-    t.integer &quot;coins&quot;
-    t.datetime &quot;created_at&quot;
-    t.datetime &quot;updated_at&quot;
+  create_table &#39;users&#39;, force: :cascade do |t|
+    t.string &#39;username&#39;
+    t.string &#39;nickname&#39;
+    t.string &#39;password&#39;
+    t.integer &#39;coins&#39;
+    t.integer &#39;admin&#39;
+    t.datetime &#39;created_at&#39;
+    t.datetime &#39;updated_at&#39;
   end
 
-  add_foreign_key &quot;guides&quot;, &quot;skills&quot;
-  add_foreign_key &quot;options&quot;, &quot;questions&quot;
-  add_foreign_key &quot;stats&quot;, &quot;users&quot;
+  add_foreign_key &#39;guides&#39;, &#39;skills&#39;
+  add_foreign_key &#39;options&#39;, &#39;questions&#39;
+  add_foreign_key &#39;stats&#39;, &#39;users&#39;
 end
 </code>
   </div>

@@ -52,7 +52,7 @@
       </span>
     </div>
     <div>
-      <h3><small>models /</small> guide.rb</h3>
+      <h3><small>spec /</small> account_spec.rb</h3>
     </div>
   </div>
   <!--End Page Title -->
@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">6</span><small> lines of codes</small></div>
+              <div><span class="metric">39</span><small> lines of codes</small></div>
               <div><span class="metric">0</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">N/A</span><small> complexity/method</small></div>
-              <div><span class="metric">2</span><small> churn</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">0.0</span><small> complexity</small></div>
+              <div><span class="metric">43.49</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -99,9 +99,42 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-# Clase guia
-class Guide &lt; ActiveRecord::Base
-  belongs_to :skill
+
+require &#39;rspec&#39;
+require &#39;rack/test&#39;
+require &#39;spec_helper&#39;
+require_relative &#39;../server&#39;
+
+RSpec.describe &#39;Account Management&#39; do
+  before(:all) do
+    @user = User.create(username: &#39;testuser1&#39;, password: &#39;password&#39;, nickname: &#39;nickname&#39;)
+  end
+
+  describe &#39;POST /change_nickname&#39; do
+    it &#39;updates the users nickname&#39; do
+      post &#39;/login&#39;, first: &#39;testuser1&#39;, password: &#39;password&#39;
+      post &#39;/change_nickname&#39;, new_nickname: &#39;NewNickname&#39;
+      user = User.find_by(username: &#39;testuser1&#39;)
+      expect(user.nickname).to eq(&#39;NewNickname&#39;)
+    end
+  end
+
+  describe &#39;POST /change_password&#39; do
+    it &#39;updates the users password&#39; do
+      post &#39;/login&#39;, first: &#39;testuser1&#39;, password: &#39;password&#39;
+      post &#39;/change_password&#39;, password: &#39;Newpassword&#39;
+
+      post &#39;/login&#39;, first: &#39;testuser1&#39;, password: &#39;Newpassword&#39;
+      expect(last_response).to be_ok
+    end
+
+    it &#39;Wrong password&#39; do
+      post &#39;/login&#39;, first: &#39;testuser1&#39;, password: &#39;password&#39;
+      post &#39;/change_password&#39;, password: &#39;&#39;
+
+      expect(last_request.path).to eq(&#39;/change_password&#39;)
+    end
+  end
 end
 </code>
   </div>

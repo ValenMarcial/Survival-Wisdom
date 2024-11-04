@@ -52,7 +52,7 @@
       </span>
     </div>
     <div>
-      <h3><small>. /</small> server.rb</h3>
+      <h3><small>. /</small> authentication_controller.rb</h3>
     </div>
   </div>
   <!--End Page Title -->
@@ -62,21 +62,21 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating c big">
-              C
+            <div class="rating b big">
+              B
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">132</span><small> lines of codes</small></div>
-              <div><span class="metric">2</span><small> methods</small></div>
+              <div><span class="metric">118</span><small> lines of codes</small></div>
+              <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">52.0</span><small> complexity/method</small></div>
-              <div><span class="metric">65</span><small> churn</small></div>
+              <div><span class="metric">97.4</span><small> complexity/method</small></div>
+              <div><span class="metric">4</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">103.97</span><small> complexity</small></div>
+              <div><span class="metric">97.38</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -99,134 +99,120 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-require &#39;sinatra&#39;
+require &#39;sinatra/base&#39;
 require &#39;sinatra/activerecord&#39;
 require &#39;bcrypt&#39;
-
-enable :sessions
-
-set :database_file, &#39;./config/database.yml&#39;
-set :public_folder, &#39;assets&#39;
-
 require &#39;./models/user&#39;
-require &#39;./models/question&#39;
-require &#39;./models/option&#39;
-require &#39;./models/skill&#39;
-require &#39;./models/guide&#39;
-require &#39;./models/bar&#39;
 require &#39;./models/stat&#39;
-require &#39;./authentication_controller&#39;
-require &#39;./game_controller&#39;
 
-# para manejar la autenticación de usuario
+
+# Para autenticar usuario
 module Authentication
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Authentication#current_user calls 'session[:user_id]' 2 times</span>          </div>  </li></ol>
   end
 end
 
-# Clase Principal
-class App &lt; Sinatra::Application
+# class to manage user login/logout and register &amp; change nickname or password
+class AuthController &lt; Sinatra::Base
   include Authentication
 
-  use AuthController # para manejar el login/register
-
-  use GameController # para la lógica del juego
-
-  def initialize(_app = nil)
-    super()
+  set :public_folder, &#39;assets&#39;
+  # Restringe el ingreso a ciertas rutas de la web sin estar logeado
+  before do
+    redirect &#39;/login&#39; unless [&#39;/login&#39;, &#39;/register&#39;, &#39;/&#39;].include?(request.path_info) || current_user
   end
 
-  get &#39;/home&#39; do
-    erb :&#39;home/home&#39;, locals: { user: current_user }
+  get &#39;/login&#39; do
+    erb :&#39;login/index&#39;, locals: { error: &#39;&#39; }
   end
 
-  get &#39;/&#39; do
-    if current_user.nil?
-      redirect &#39;/login&#39;
-    else
+  # Inicio de sesion para los usuarios
+  post &#39;/login&#39; do
+    username = params[:first]
+    password = params[:password]
+
+    user = User.authenticate(username, password)
+
+    if user
+      session[:user_id] = user.id # Almacena el ID de usuario en la sesión
       redirect &#39;/home&#39;
+    else
+      # Credenciales inválidas, renderiza nuevamente el formulario de inicio de sesión con un mensaje de error
+      erb :&#39;login/index&#39;, locals: { error: &#39;Credenciales inválidas. Por favor, inténtalo de nuevo.&#39; }
     end
   end
 
-  get &#39;/skills&#39; do
-    erb :&#39;home/skills&#39;, locals: { user: current_user }
+  get &#39;/register&#39; do
+    erb :&#39;login/register&#39;, locals: { error: &#39; &#39; }
   end
 
-  # Muestra los pdf de las guias
-  get &#39;/skill/:guide.pdf&#39; do
-    file_path = &quot;views\\skill\\#{params[:guide].capitalize}.pdf&quot;
-    send_file file_path, type: :pdf
+  # Registra un nuevo usuario en la web
+  post &#39;/register&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>AuthController::post#/register has a flog score of 33</span>          </div>  </li></ol>
+    username = params[:first]
+    password = params[:password]
+    nickname = params[:nickname]
+    # Verifica si ya existe un usuario con el mismo nombre de usuario en la base de datos
+    existing_user = User.find_by(username: username)
+
+    if existing_user
+      # Si ya existe un usuario con el mismo nombre de usuario,
+      # puedes renderizar nuevamente el formulario de registro con un mensaje de error
+      erb :&#39;login/register&#39;,
+          locals: { error: &#39;El nombre de usuario ya está en uso. Por favor, elige otro nombre de usuario.&#39; }
+    else
+      # Si no existe un usuario con el mismo nombre de usuario,
+      # procede a crear uno nuevo y guardarlo en la base de datos
+      new_password_digest = BCrypt::Password.create(password)
+      user = User.new
+      user.username = username
+      user.password = new_password_digest
+      user.nickname = nickname
+      user.coins = 0
+      user.admin = 0
+      user.save
+
+      session[:user_id] = user.id
+      stat = Stat.new
+      stat.user_id = session[:user_id] # Asigna el ID del usuario
+      stat.days = 0
+      stat.save
+      redirect &#39;/login&#39;
+
+    end
   end
 
-  # Ingresa a la guia que el usuario desee
-  get &#39;/skill/:id&#39; do
-    erb :&quot;skill/#{params[:id]}&quot;
+  # cierra la sesion
+  get &#39;/logout&#39; do
+    session.clear
+    redirect &#39;/login&#39;
   end
 
-
-  get &#39;/keep_it_alive&#39; do
-    erb :&#39;home/keep_it_alive&#39;, locals: { user: current_user }
+  post &#39;/change_nickname&#39; do
+    new_nickname = params[:new_nickname]
+    current_user = User.find(session[:user_id])
+    # Actualiza el nickname del usuario actual
+    current_user.update(nickname: new_nickname)
+    # Guarda los cambios en la base de datos
+    current_user.save
+    # Redirige a la página de cuenta o a donde prefieras
+    redirect &#39;/account&#39;
   end
 
-  get &#39;/about&#39; do
-    erb :&#39;home/about&#39;, locals: { user: current_user }
-  end
-
-  get &#39;/account&#39; do
-    erb :&#39;home/account&#39;, locals: { user: current_user }
-  end
-
-  get &#39;/leaderboard&#39; do
-    erb :&#39;home/leaderboard&#39;, locals: { user: current_user }
-  end
-
-  get &#39;/add_question&#39; do
-    erb :&#39;home/add_question&#39;, { user: current_user }
-  end
-
-  post &#39;/add_question&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>App::post#/add_question has a flog score of 50</span>          </div>  </li></ol>
-    statement = params[:statement]
-    difficulty = params[:difficulty]
-
-    description_l = params[:descriptionL]
-    effects_l = params[:effectsL].split(&#39;,&#39;).map(&amp;:strip).map(&amp;:to_i)
-
-    description_r = params[:descriptionR]
-    effects_r = params[:effectsR].split(&#39;,&#39;).map(&amp;:strip).map(&amp;:to_i)
-
-    question = Question.new
-
-    question.statement = statement
-    question.typeCard = difficulty
-
-    question.save
-
-    question_id = question.id
-
-
-
-    option_l = Option.new
-    option_l.question_id = question_id
-    option_l.description = description_l
-    option_l.effects = effects_l
-
-
-    option_r = Option.new
-    option_r.question_id = question_id
-    option_r.description = description_r
-    option_r.effects = effects_r
-
-    option_l.save
-    option_r.save
-
-    @success_message = &#39;The question was successfully added!&#39;
-
-    erb :&#39;home/add_question&#39;, { user: current_user }
-  end
-
-  get &#39;/card-stats&#39; do
-    erb :&#39;home/card-stats&#39;, { user: current_user }
+  post &#39;/change_password&#39; do
+    new_password = params[:new_password]
+    current_user = User.find(session[:user_id])
+    if new_password != &#39; &#39; &amp;&amp; new_password != &#39;&#39; &amp;&amp; new_password != BCrypt::Password.new(current_user.password)
+      # Actualiza el pasword del usuario actual
+      new_password_digest = BCrypt::Password.create(new_password)
+      current_user.update(password: new_password_digest)
+      # Guarda los cambios en la base de datos
+      current_user.save
+      # Redirige a la página de cuenta o a donde prefieras
+      redirect &#39;/logout&#39;
+    else
+      erb :&#39;home/account&#39;, locals: { error: &#39;Contraseña no valida.&#39; }
+    end
   end
 end
 </code>

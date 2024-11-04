@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">5</span><small> lines of codes</small></div>
+              <div><span class="metric">8</span><small> lines of codes</small></div>
               <div><span class="metric">0</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">N/A</span><small> complexity/method</small></div>
-              <div><span class="metric">3</span><small> churn</small></div>
+              <div><span class="metric">4</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">0.0</span><small> complexity</small></div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                1
+                0
                 smell
               </a>
             </li>
@@ -97,10 +97,13 @@
       </div>
     </div>
 
-    <code class="prettyprint linenums lang-ruby file-code js-file-code">class Option &lt; ActiveRecord::Base<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Option has no descriptive comment</span>          </div>  </li></ol>
-    has_many :bars
-    has_one :answer
-    belongs_to :question
+    <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
+
+# CLase de Opciones
+class Option &lt; ActiveRecord::Base
+  has_many :bars
+  has_one :answer
+  belongs_to :question
 end
 </code>
   </div>

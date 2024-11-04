@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">22</span><small> lines of codes</small></div>
+              <div><span class="metric">25</span><small> lines of codes</small></div>
               <div><span class="metric">2</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">3.1</span><small> complexity/method</small></div>
-              <div><span class="metric">6</span><small> churn</small></div>
+              <div><span class="metric">7</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">6.11</span><small> complexity</small></div>
@@ -88,8 +88,8 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                2
-                smells
+                1
+                smell
               </a>
             </li>
           </ul>
@@ -97,28 +97,31 @@
       </div>
     </div>
 
-    <code class="prettyprint linenums lang-ruby file-code js-file-code">class User &lt; ActiveRecord::Base<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>User has no descriptive comment</span>          </div>  </li></ol>
-    # Otros métodos y definiciones de la clase...
-    has_many :stats
-    has_many :tests
-    has_many :answers
-    has_many :skills
+    <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
+
+# Clase de Usuario
+class User &lt; ActiveRecord::Base
+  # Otros métodos y definiciones de la clase...
+  has_many :stats
+  has_many :tests
+  has_many :answers
+  has_many :skills
 
 
-    validates :username, presence: true, uniqueness: true
-    validates :password, presence: true
+  validates :username, presence: true, uniqueness: true
+  validates :password, presence: true
 
-    def self.authenticate(username, password)
-      user = find_by(username: username)
-      return nil unless user
-      BCrypt::Password.new(user.password) == password ? user : nil<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Control-Parameter.md" target="_blank"><b>ControlParameter</b></a>        </span>      </div>      <span>User#self.authenticate is controlled by argument 'password'</span>          </div>  </li></ol>
-    end
+  def self.authenticate(username, password)
+    user = find_by(username: username)
+    return nil unless user
 
-    def name
-      self[:username]
-    end
-
+    BCrypt::Password.new(user.password) == password ? user : nil<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Control-Parameter.md" target="_blank"><b>ControlParameter</b></a>        </span>      </div>      <span>User#self.authenticate is controlled by argument 'password'</span>          </div>  </li></ol>
   end
+
+  def name
+    self[:username]
+  end
+end
 </code>
   </div>
 </div>

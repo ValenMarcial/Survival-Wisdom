@@ -52,7 +52,7 @@
       </span>
     </div>
     <div>
-      <h3><small>models /</small> guide.rb</h3>
+      <h3><small>spec /</small> auth_spec.rb</h3>
     </div>
   </div>
   <!--End Page Title -->
@@ -62,21 +62,21 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating a big">
-              A
+            <div class="rating c big">
+              C
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">6</span><small> lines of codes</small></div>
+              <div><span class="metric">68</span><small> lines of codes</small></div>
               <div><span class="metric">0</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">N/A</span><small> complexity/method</small></div>
-              <div><span class="metric">2</span><small> churn</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">0.0</span><small> complexity</small></div>
+              <div><span class="metric">114.95</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -99,9 +99,71 @@
 
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-# Clase guia
-class Guide &lt; ActiveRecord::Base
-  belongs_to :skill
+require &#39;rspec&#39;
+require &#39;rack/test&#39;
+require &#39;spec_helper&#39;
+require_relative &#39;../server&#39;
+
+RSpec.describe &#39;Authentication&#39; do
+  describe &#39;POST /login&#39; do
+    user = User.new
+    user.username = &#39;testuser1&#39;
+    user.password = &#39;password&#39;
+    user.nickname = &#39;nickname&#39;
+    user.save
+
+    it &#39;logs in the user with correct credentials&#39; do
+      post &#39;/login&#39;, first: &#39;testuser1&#39;, password: &#39;password&#39;
+      expect(last_response).to be_redirect
+      follow_redirect!
+      expect(last_request.path).to eq(&#39;/home&#39;)
+    end
+
+    it &#39;renders login page with error on invalid credentials&#39; do
+      post &#39;/login&#39;, first: &#39;testuser1&#39;, password: &#39;wrongpassword&#39;
+      expect(last_response).to be_ok
+      expect(last_response.body).to include(&#39;Credenciales inválidas&#39;)
+    end
+  end
+
+  describe &#39;POST /register&#39; do
+    it &#39;registers a new user&#39; do
+      post &#39;/register&#39;, first: &#39;newuser1&#39;, password: &#39;password&#39;, nickname: &#39;newnickname&#39;
+      expect(last_response).to be_redirect
+      follow_redirect!
+      expect(last_request.path).to eq(&#39;/login&#39;)
+    end
+
+    it &#39;renders register page with error if username already taken&#39; do
+      user = User.new
+      user.username = &#39;existinguser&#39;
+      user.password = &#39;password&#39;
+      user.nickname = &#39;nickname&#39;
+      user.save
+
+      post &#39;/register&#39;, first: &#39;existinguser&#39;, password: &#39;password&#39;, nickname: &#39;nickname&#39;
+      expect(last_response).to be_ok
+      expect(last_response.body).to include(&#39;El nombre de usuario ya está en uso.&#39;)
+    end
+  end
+
+  describe &#39;.authenticate&#39; do
+    it &#39;authenticate a valid account&#39; do
+      username = &#39;testuser1&#39;
+      password = &#39;password&#39;
+      user = User.find_by(username: username)
+
+      expect(User.authenticate(username, password)).to eq(user)
+    end
+
+    it &#39;Wrong credentials&#39; do
+      username = &#39;notuser&#39;
+      password = &#39;notpassword&#39;
+      User.find_by(username: username)
+
+      expect(User.authenticate(username, password)).to eq(nil)
+    end
+  end
 end
 </code>
   </div>

@@ -68,12 +68,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">124</span><small> lines of codes</small></div>
-              <div><span class="metric">0</span><small> methods</small></div>
+              <div><span class="metric">128</span><small> lines of codes</small></div>
+              <div><span class="metric">1</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">N/A</span><small> complexity/method</small></div>
-              <div><span class="metric">3</span><small> churn</small></div>
+              <div><span class="metric">0.0</span><small> complexity/method</small></div>
+              <div><span class="metric">6</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">0.0</span><small> complexity</small></div>
@@ -113,6 +113,8 @@
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+# frozen_string_literal: true
+
 require &#39;simplecov&#39;
 SimpleCov.start
 
@@ -121,13 +123,17 @@ ENV[&#39;RACK_ENV&#39;] = &#39;test&#39;
 require &#39;rspec&#39;
 require &#39;rack/test&#39;
 require &#39;sinatra/activerecord&#39;
-require_relative &#39;../server.rb&#39;
+require_relative &#39;../server&#39;
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
   config.include Rack::Test::Methods
+
+  def app
+    App
+  end
 
   config.before(:suite) do
     ActiveRecord::Base.establish_connection(:test)
@@ -169,57 +175,55 @@ RSpec.configure do |config|
   # triggering implicit auto-inclusion in groups with matching metadata.
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
-# The settings below are suggested to provide a good initial experience
-# with RSpec, but feel free to customize to your heart&#39;s content.
-=begin
-  # This allows you to limit a spec run to individual examples or groups
-  # you care about by tagging them with `:focus` metadata. When nothing
-  # is tagged with `:focus`, all examples get run. RSpec also provides
-  # aliases for `it`, `describe`, and `context` that include `:focus`
-  # metadata: `fit`, `fdescribe` and `fcontext`, respectively.
-  config.filter_run_when_matching :focus
-
-  # Allows RSpec to persist some state between runs in order to support
-  # the `--only-failures` and `--next-failure` CLI options. We recommend
-  # you configure your source control system to ignore this file.
-  config.example_status_persistence_file_path = &quot;spec/examples.txt&quot;
-
-  # Limits the available syntax to the non-monkey patched syntax that is
-  # recommended. For more details, see:
-  # https://rspec.info/features/3-12/rspec-core/configuration/zero-monkey-patching-mode/
-  config.disable_monkey_patching!
-
-  # This setting enables warnings. It&#39;s recommended, but in some cases may
-  # be too noisy due to issues in dependencies.
-  config.warnings = true
-
-  # Many RSpec users commonly either run the entire suite or an individual
-  # file, and it&#39;s useful to allow more verbose output when running an
-  # individual spec file.
-  if config.files_to_run.one?
-    # Use the documentation formatter for detailed output,
-    # unless a formatter has already been configured
-    # (e.g. via a command-line flag).
-    config.default_formatter = &quot;doc&quot;
-  end
-
-  # Print the 10 slowest examples and example groups at the
-  # end of the spec run, to help surface which specs are running
-  # particularly slow.
-  config.profile_examples = 10
-
-  # Run specs in random order to surface order dependencies. If you find an
-  # order dependency and want to debug it, you can fix the order by providing
-  # the seed, which is printed after each run.
-  #     --seed 1234
-  config.order = :random
-
-  # Seed global randomization in this process using the `--seed` CLI option.
-  # Setting this allows you to use `--seed` to deterministically reproduce
-  # test failures related to randomization by passing the same `--seed` value
-  # as the one that triggered the failure.
-  Kernel.srand config.seed
-=end
+  # The settings below are suggested to provide a good initial experience
+  # with RSpec, but feel free to customize to your heart&#39;s content.
+  #   # This allows you to limit a spec run to individual examples or groups
+  #   # you care about by tagging them with `:focus` metadata. When nothing
+  #   # is tagged with `:focus`, all examples get run. RSpec also provides
+  #   # aliases for `it`, `describe`, and `context` that include `:focus`
+  #   # metadata: `fit`, `fdescribe` and `fcontext`, respectively.
+  #   config.filter_run_when_matching :focus
+  #
+  #   # Allows RSpec to persist some state between runs in order to support
+  #   # the `--only-failures` and `--next-failure` CLI options. We recommend
+  #   # you configure your source control system to ignore this file.
+  #   config.example_status_persistence_file_path = &quot;spec/examples.txt&quot;
+  #
+  #   # Limits the available syntax to the non-monkey patched syntax that is
+  #   # recommended. For more details, see:
+  #   # https://rspec.info/features/3-12/rspec-core/configuration/zero-monkey-patching-mode/
+  #   config.disable_monkey_patching!
+  #
+  #   # This setting enables warnings. It&#39;s recommended, but in some cases may
+  #   # be too noisy due to issues in dependencies.
+  #   config.warnings = true
+  #
+  #   # Many RSpec users commonly either run the entire suite or an individual
+  #   # file, and it&#39;s useful to allow more verbose output when running an
+  #   # individual spec file.
+  #   if config.files_to_run.one?
+  #     # Use the documentation formatter for detailed output,
+  #     # unless a formatter has already been configured
+  #     # (e.g. via a command-line flag).
+  #     config.default_formatter = &quot;doc&quot;
+  #   end
+  #
+  #   # Print the 10 slowest examples and example groups at the
+  #   # end of the spec run, to help surface which specs are running
+  #   # particularly slow.
+  #   config.profile_examples = 10
+  #
+  #   # Run specs in random order to surface order dependencies. If you find an
+  #   # order dependency and want to debug it, you can fix the order by providing
+  #   # the seed, which is printed after each run.
+  #   #     --seed 1234
+  #   config.order = :random
+  #
+  #   # Seed global randomization in this process using the `--seed` CLI option.
+  #   # Setting this allows you to use `--seed` to deterministically reproduce
+  #   # test failures related to randomization by passing the same `--seed` value
+  #   # as the one that triggered the failure.
+  #   Kernel.srand config.seed
 end
 </code>
   </div>
