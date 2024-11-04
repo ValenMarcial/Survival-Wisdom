@@ -32,6 +32,10 @@ RSpec.configure do |config|
   # assertions if you prefer.
   config.include Rack::Test::Methods
 
+  def app
+    App 
+  end
+
   config.before(:suite) do
     ActiveRecord::Base.establish_connection(:test)
     ActiveRecord::Migration.maintain_test_schema!
