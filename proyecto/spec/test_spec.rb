@@ -11,12 +11,3 @@ require_relative 'endpoints_spec'
 require 'rspec'
 require 'rack/test'
 require 'spec_helper'
-
-
- 
-
- 
-
-
-
-
