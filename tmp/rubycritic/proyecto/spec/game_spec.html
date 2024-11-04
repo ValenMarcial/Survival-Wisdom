@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ruby Critic - Home</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- StyleSheets -->
+    <link href="../../assets/vendor/stylesheets/bootstrap.min.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../../assets/vendor/stylesheets/font-awesome.min.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../../assets/vendor/stylesheets/prettify.custom_theme.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../../assets/stylesheets/application.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+    <header class="navbar navbar-default navbar-fixed-top">
+      <a href="#menu-toggle" class="btn btn-default hidden-lg visible-sm-* hidden-md visible-xs-* pull-left" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a>
+      <a href="../../overview.html"><img src="../../assets/images/logo.png" alt="Ruby Critic Logo" title="Ruby Critic Logo" width="55"><span class="logo">RUBYCRITIC</span></a>
+      
+    </header>
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <aside id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+          <li class="sidebar-item">
+            <a href="../../overview.html" class="project-nav-item overview-nav"><i class="fa fa-dashboard"></i>Overview</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../../code_index.html" class="project-nav-item code-index-nav"><i class="fa fa-code"></i>Code</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../../smells_index.html" class="project-nav-item smells-index-nav"><i class="fa fa-warning"></i>Smells</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../../simple_cov_index.html" class="project-nav-item coverage-index-nav"><i class="fa fa-umbrella"></i>Coverage</a>
+          </li>
+        </ul>
+      </aside>
+      <!-- /#sidebar-wrapper -->
+      <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <div class="row">
+  <!--Page Title -->
+  <div class="Page_Title">
+    <div class="file-time">
+      <span class="committed-at">
+        
+          Never committed
+        
+      </span>
+    </div>
+    <div>
+      <h3><small>proyecto/spec /</small> game_spec.rb</h3>
+    </div>
+  </div>
+  <!--End Page Title -->
+  <div class="Content_Wrapper">
+    <!-- code detail -->
+    <div class="code-top-detail clearfix row">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-1">
+            <div class="rating f big">
+              F
+            </div>
+          </div>
+          <div class="code-statistics col-md-11">
+            <div class="col-md-3">
+              <div><span class="metric">315</span><small> lines of codes</small></div>
+              <div><span class="metric">2</span><small> methods</small></div>
+            </div>
+            <div class="col-md-3">
+              <div><span class="metric">382.2</span><small> complexity/method</small></div>
+              <div><span class="metric">3</span><small> churn</small></div>
+            </div>
+            <div class="col-md-3">
+              <div><span class="metric">764.43</span><small> complexity</small></div>
+              <div><span class="metric">117</span><small> duplications</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="code-tabs">
+          <ul class="nav nav-pills right-to-left">
+            <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
+            <li class="active">
+              <a href="#" id="toggle-smells" class="toggle-button button">
+                17
+                smells
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
+
+require &#39;rspec&#39;
+require &#39;rack/test&#39;
+require &#39;spec_helper&#39;
+require_relative &#39;../server&#39;
+
+RSpec.describe &#39;Game Logic&#39; do
+
+        # Checkea que la partida se inicialice correctamente
+    describe &#39;GET /keep_it_alive/init&#39; do
+        it &#39;initializes the game session&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>describe(GET /keep_it_alive/init)::it#initializes the game session has a flog score of 66</span>          </div>  </li></ol>
+        post &#39;/login&#39;, first: &#39;testuser1&#39;, password: &#39;password&#39;
+
+        env &#39;rack.session&#39;, {
+            health: 5,
+            hunger: 5,
+            water: 5,
+            temperature: 5,
+            days: 0,
+            question: nil,
+            questions: nil
+        }
+
+        def session
+            last_request.env[&#39;rack.session&#39;]
+        end
+
+        get &#39;/keep_it_alive/init&#39;
+
+        expect(last_response).to be_ok
+        expect(session[:health]).to eq(10)
+        expect(session[:hunger]).to eq(10)
+        expect(session[:water]).to eq(10)
+        expect(session[:temperature]).to eq(10)
+        expect(session[:days]).to eq(0)
+        expect(session[:question]).to be_present
+        end
+    end
+
+    
+    describe &#39;POST /keep_it_alive/playing&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>describe#POST /keep_it_alive/playing has a flog score of 54</span>          </div>  </li></ol>
+        before do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="game_spec.html#L43" class="js-smell-location">0</a>                  <a href="game_spec.html#L219" class="js-smell-location">1</a>                  </div>  </li></ol>
+            post &#39;/login&#39;, first: &#39;testuser1&#39;, password: &#39;password&#39;
+
+            # Set up the session
+            env &#39;rack.session&#39;, {
+                question: 1,
+                health: 5,
+                hunger: 5,
+                water: 5,
+                temperature: 5,
+                days: 1,
+                user_id: 1,
+                coins: 0
+            }
+        end
+        let(:effects) { [1, -1, 2, -2] } # Simula los efectos de la opción elegida
+
+        def session
+            last_request.env[&#39;rack.session&#39;]
+        end
+
+
+        before do
+            option_mock = double(&#39;Option&#39;, effects: effects)
+
+            # Mock para la pregunta, asegurando que devuelva la lista de opciones
+            @question_mock = double(&#39;Question&#39;, options: [option_mock, option_mock])
+
+            # Inicializamos los contadores de clics
+            @rightclicks = 0
+            @leftclicks = 0
+
+            # Simulamos la lectura de rightclicks y leftclicks
+            allow(@question_mock).to receive(:rightclicks).and_return(@rightclicks)
+            allow(@question_mock).to receive(:leftclicks).and_return(@leftclicks)
+
+            # Simulamos la escritura de rightclicks y leftclicks
+            allow(@question_mock).to receive(:rightclicks=) { |value| @rightclicks = value }
+            allow(@question_mock).to receive(:leftclicks=) { |value| @leftclicks = value }
+
+            # Simulamos el metodo save
+            allow(@question_mock).to receive(:save)
+            # Simulamos la llamada a `Question.find`
+            allow(Question).to receive(:find).and_return(@question_mock)
+        end
+
+        it &#39;cuando se elige la opción derecha, incrementa el contador de rightclicks&#39; do
+            # Simula un clic en la opción correcta (opción 2)
+            post &#39;/keep_it_alive/playing&#39;, valor: 2
+            # Verifica que el contador de rightclicks se haya incrementado
+            expect(@rightclicks).to eq(1)
+        end
+
+        it &#39;cuando se elige la opción izquierda, incrementa el contador de leftclicks&#39; do
+            # Simula un clic en la opción incorrecta (opción 1)
+            post &#39;/keep_it_alive/playing&#39;, valor: 1
+            # Verifica que el contador de leftclicks se haya incrementado
+            expect(@leftclicks).to eq(1)
+        end
+
+        it &#39;updates session correctly when effects are positive and negative&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>describe(POST /keep_it_alive/playing)::it#updates session correctly when effects are positive and negative has a flog score of 41</span>          </div>  </li></ol>
+            post &#39;/keep_it_alive/playing&#39;, params: { valor: 1 }
+            expect(session[:health]).to eq(6)
+            expect(session[:hunger]).to eq(4)
+            expect(session[:water]).to eq(7)
+            expect(session[:temperature]).to eq(3)
+        end
+
+        it &#39;caps session values at 10&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>describe(POST /keep_it_alive/playing)::it#caps session values at 10 has a flog score of 52</span>          </div>  </li></ol>
+            allow(Question).to receive_message_chain(:find, :options).and_return([double(effects: [10, 10, 10, 10])])<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="game_spec.html#L112" class="js-smell-location">0</a>                  <a href="game_spec.html#L121" class="js-smell-location">1</a>                  </div>  </li></ol>
+            post &#39;/keep_it_alive/playing&#39;, params: { valor: 1 }
+            expect(session[:health]).to eq(10)
+            expect(session[:hunger]).to eq(10)
+            expect(session[:water]).to eq(10)
+            expect(session[:temperature]).to eq(10)
+        end
+
+        it &#39;renders gameover when any session value is 0 or below&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>describe(POST /keep_it_alive/playing)::it#renders gameover when any session value is 0 or below has a flog score of 34</span>          </div>  </li></ol>
+            allow(Question).to receive_message_chain(:find, :options).and_return([double(effects: [-10, -10, -10, -10])])<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="game_spec.html#L112" class="js-smell-location">0</a>                  <a href="game_spec.html#L121" class="js-smell-location">1</a>                  </div>  </li></ol>
+            post &#39;/keep_it_alive/playing&#39;, params: { valor: 1 }
+            expect(last_response.status).to eq(200)
+            expect(last_response.body).to include(&#39;GAME OVER&#39;)
+        end
+    end
+
+    describe &#39;POST /keep_it_alive/comodin&#39; do
+        let(:question) { double(&#39;Question&#39;, id: 1) }
+        let(:questions) { [question] }
+        let(:question_class) { class_double(&#39;Question&#39;).as_stubbed_const }
+    
+        before do
+            post &#39;/login&#39;, first: &#39;testuser1&#39;, password: &#39;password&#39;
+            get &#39;/keep_it_alive/init&#39;
+        end
+    
+        context &#39;when using comodin 1 (Skip de carta)&#39; do
+            it &#39;deducts 30 coins &#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>describe(POST /keep_it_alive/comodin)::context(when using comodin 1 (Skip de carta))::it#deducts 30 coins  has a flog score of 35</span>          </div>  </li></ol>
+                post &#39;/keep_it_alive/comodin&#39;, { comodin: 1 }, &#39;rack.session&#39; =&gt; { coins: 50 }
+                expect(last_response).to be_redirect
+                follow_redirect!
+                expect(last_request.path).to eq(&#39;/keep_it_alive/playing&#39;)
+                expect(last_request.session[:coins]).to eq(20)
+            end
+    
+            it &#39;does not deduct coins if there are not enough&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>describe(POST /keep_it_alive/comodin)::context(when using comodin 1 (Skip de carta))::it#does not deduct coins if there are not enough has a flog score of 32</span>          </div>  </li></ol>
+                initial_coins = 10
+                post &#39;/keep_it_alive/comodin&#39;, { comodin: 1 }, &#39;rack.session&#39; =&gt; { coins: initial_coins }
+        
+                # Comprobar que las monedas no cambian
+                expect(last_request.session[:coins]).to eq(initial_coins)
+                # Verificar que no se redirige a la ruta de playing
+                expect(last_response).to be_ok
+                expect(last_request.path).not_to eq(&#39;/keep_it_alive/playing&#39;)
+            end       
+    
+            it &#39;deducts 30 and refill cards&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>describe(POST /keep_it_alive/comodin)::context(when using comodin 1 (Skip de carta))::it#deducts 30 and refill cards has a flog score of 28</span>          </div>  </li></ol>
+                # Simula que no hay preguntas en la sesión
+                # Realiza la solicitud para usar el comodín
+                post &#39;/keep_it_alive/comodin&#39;, { comodin: 1 }, &#39;rack.session&#39; =&gt; { coins: 50, &#39;@questions&#39; =&gt; [] }
+        
+                # Verifica que se dedujeron las monedas
+                expect(last_request.session[:coins]).to eq(20)
+        
+                # Verifica que las preguntas se rellenaron correctamente
+                expect(last_request.session[:@questions]).not_to eq([])
+                # Asegúrate de que el ID de la pregunta coincida con el que has configurado
+            end
+        end
+    
+        context &#39;when using comodin 2 (Stat Boost)&#39; do
+            it &#39;deducts 10 coins and boosts stats&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>describe(POST /keep_it_alive/comodin)::context(when using comodin 2 (Stat Boost))::it#deducts 10 coins and boosts stats has a flog score of 85</span>          </div>  </li></ol>
+                post &#39;/keep_it_alive/comodin&#39;, { comodin: 2 },
+                    &#39;rack.session&#39; =&gt; { coins: 20, health: 5, hunger: 5, water: 5, temperature: 5 }
+                expect(last_response).to be_ok
+                expect(last_request.session[:coins]).to eq(10)
+                expect(last_request.session[:health]).to be_between(5, 8).inclusive
+                expect(last_request.session[:hunger]).to be_between(5, 8).inclusive
+                expect(last_request.session[:water]).to be_between(5, 8).inclusive
+                expect(last_request.session[:temperature]).to be_between(5, 8).inclusive
+            end
+        
+            it &#39;does not boost stats if there are not enough coins&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>VeryHighComplexity</b></a>        </span>      </div>      <span>describe(POST /keep_it_alive/comodin)::context(when using comodin 2 (Stat Boost))::it#does not boost stats if there are not enough coins has a flog score of 74</span>          </div>  </li></ol>
+                initial_stats = { health: 5, hunger: 5, water: 5, temperature: 5 }
+                initial_coins = 5
+                post &#39;/keep_it_alive/comodin&#39;, { comodin: 2 }, &#39;rack.session&#39; =&gt; { coins: initial_coins }.merge(initial_stats)
+        
+                # Verificar que las monedas no cambian
+                expect(last_request.session[:coins]).to eq(initial_coins)
+                # Verificar que las estadísticas no cambian
+                expect(last_request.session[:health]).to eq(initial_stats[:health])
+                expect(last_request.session[:hunger]).to eq(initial_stats[:hunger])
+                expect(last_request.session[:water]).to eq(initial_stats[:water])
+                expect(last_request.session[:temperature]).to eq(initial_stats[:temperature])
+            end
+        end
+    
+        context &#39;when using comodin 3 (Xray)&#39; do
+            it &#39;deducts 15 coins and activates Xray&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>describe(POST /keep_it_alive/comodin)::context(when using comodin 3 (Xray))::it#deducts 15 coins and activates Xray has a flog score of 36</span>          </div>  </li></ol>
+                post &#39;/keep_it_alive/comodin&#39;, { comodin: 3 }, &#39;rack.session&#39; =&gt; { coins: 20 }
+                expect(last_response).to be_ok
+                expect(last_request.session[:coins]).to eq(5)
+                expect(last_request.session[:xray]).to eq(1)
+            end
+        
+            it &#39;does not activate Xray if there are not enough coins&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>describe(POST /keep_it_alive/comodin)::context(when using comodin 3 (Xray))::it#does not activate Xray if there are not enough coins has a flog score of 28</span>          </div>  </li></ol>
+                initial_coins = 10
+                post &#39;/keep_it_alive/comodin&#39;, { comodin: 3 }, &#39;rack.session&#39; =&gt; { coins: initial_coins }
+        
+                # Verificar que las monedas no cambian
+                expect(last_request.session[:coins]).to eq(initial_coins)
+                # Verificar que el modo Xray no se activa
+                expect(last_request.session[:xray]).to eq(0)
+            end
+        end
+    end
+      describe &#39;POST /keep_it_alive/end&#39; do
+        before do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="game_spec.html#L43" class="js-smell-location">0</a>                  <a href="game_spec.html#L219" class="js-smell-location">1</a>                  </div>  </li></ol>
+          post &#39;/login&#39;, first: &#39;testuser1&#39;, password: &#39;password&#39;
+    
+          # Set up the session
+          env &#39;rack.session&#39;, {
+            question: 1,
+            health: 5,
+            hunger: 5,
+            water: 5,
+            temperature: 0,
+            days: 5,
+            user_id: 1,
+            coins: 15
+          }
+        end
+    
+        it &#39;Ends a game and saves the files&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>describe(POST /keep_it_alive/end)::it#Ends a game and saves the files has a flog score of 31</span>          </div>  </li></ol>
+          stat_count_before = Stat.count
+          post &#39;/keep_it_alive/end&#39;
+          stat_count_after = Stat.count
+    
+          expect(stat_count_after).to eq(stat_count_before + 1)
+          expect(last_response).to be_redirect
+          follow_redirect!
+          expect(last_request.path).to eq(&#39;/home&#39;)
+        end
+      end
+
+      describe &#39;Game Restart&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="endpoints_spec.html#L130" class="js-smell-location">0</a>                  <a href="game_spec.html#L247" class="js-smell-location">1</a>                  </div>  </li></ol>
+        it &#39;resets the game state and redirects to the game init page&#39; do
+          # logeo el usuario:
+          post &#39;/login&#39;, first: &#39;testuser1&#39;, password: &#39;password&#39;
+          # Realiza la solicitud POST para reiniciar el juego
+          post &#39;/jugar-de-nuevo&#39;
+    
+          # Verifica la redirección
+          expect(last_response).to be_redirect
+          follow_redirect!
+    
+          # Verifica que la redirección lleve a la página de inicio del juego
+          expect(last_request.path).to eq(&#39;/keep_it_alive/init&#39;)
+        end
+      end
+
+      describe &#39;GET /keep_it_alive/init&#39; do
+        context &#39;cuando no hay preguntas disponibles&#39; do
+          before do
+            # logeo el usuario:
+            post &#39;/login&#39;, first: &#39;testuser1&#39;, password: &#39;password&#39;
+            allow(Question).to receive(:all).and_return(double(order: [])) # Simula que no hay preguntas
+            allow(Bar).to receive(:all).and_return([]) # Opcional: si también necesitas simular los bares
+            get &#39;/keep_it_alive/init&#39;
+          end
+    
+          it &#39;debe devolver un mensaje indicando que no hay preguntas disponibles&#39; do
+            expect(last_response.body.force_encoding(&#39;UTF-8&#39;)).to eq(&#39;No hay preguntas disponibles.&#39;)
+          end
+        end
+      end
+    
+    
+      describe &#39;GET /keep_it_alive/playing&#39; do
+        before do
+          post &#39;/login&#39;, first: &#39;testuser1&#39;, password: &#39;password&#39;
+        end
+    
+        it &#39;empty questions&#39; do
+          post &#39;/login&#39;, first: &#39;testuser1&#39;, password: &#39;password&#39;
+    
+          env &#39;rack.session&#39;, {
+            health: 5,
+            hunger: 5,
+            water: 5,
+            temperature: 5,
+            days: 0,
+            question: nil,
+            questions: []
+          }
+    
+          get &#39;/keep_it_alive/playing&#39;
+          expect(last_request.session[:questions]).to_not eq(nil)
+        end
+    
+    
+    
+        it &#39;asigna correctamente @questions con las preguntas de la sesión&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>describe(GET /keep_it_alive/playing)::it#asigna correctamente @questions con las preguntas de la sesión has a flog score of 29</span>          </div>  </li></ol>
+          @questions = Question.all.order(&#39;RANDOM()&#39;).to_a.map(&amp;:id)
+          question1 = @questions.shift
+          question2 = @questions.shift
+    
+          # Simular que las preguntas estan en la sesión
+          get &#39;/keep_it_alive/playing&#39;, {}, { &#39;rack.session&#39; =&gt; { &#39;@questions&#39; =&gt; [question1, question2, question1] } }
+          # Verificar que la sesión contiene las preguntas correctas
+          expect(last_request.env[&#39;rack.session&#39;][&#39;@questions&#39;]).to contain_exactly(question1, question2)
+        end
+      end
+end
+</code>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScripts -->
+    <script src="../../assets/vendor/javascripts/jquery.min.js"></script>
+    <script src="../../assets/vendor/javascripts/jquery.tablesorter.min.js"></script>
+    <script src="../../assets/vendor/javascripts/jquery.scrollTo.min.js"></script>
+    <script src="../../assets/vendor/javascripts/jquery.timeago.js"></script>
+    <script src="../../assets/vendor/javascripts/highcharts.src-4.0.1.js"></script>
+    <script src="../../assets/vendor/javascripts/prettify.js"></script>
+    <script src="../../assets/vendor/javascripts/bootstrap.min.js"></script>
+    <script src="../../assets/javascripts/application.js"></script>
+    <script src="../../assets/vendor/javascripts/jquery.filtertable.min.js"></script>
+  </body>
+</html>
